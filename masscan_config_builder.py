@@ -1,17 +1,36 @@
 import argparse
 import csv
 import os
+import re
+
+from termcolor import colored
+
+#Global constants
+REGEX_IPV4 = re.compile("^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$")
 
 def import_file():
     filename = args.filename
-    print(f'Importing {filename}')
-    if not os.path.exists(filename)
+    if filename is None:
         parser.print_help()
-        print(f'\n The file {filename} cannot be found or you do not have '
-              'permission to ope the file.')
+
+        print(colored(f'\n[-] An input file of type text is required.','red'))
+        exit()
+
+    print(f'Importing {filename}')
+    if os.path.exists(filename):
+        with open(filename, "r") as ipFile:
+            for line in ipFile:
+                match = REGEX_IPV4.match(line)
+                print(f'{match}')
+    else:
+        parser.print_help()
+        print(colored(f'\n The file {filename} cannot be found or you do not have '
+              'permission to ope the file.','red'))
+        exit()
+
 
 def main():
-
+    import_file()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
